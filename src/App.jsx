@@ -1,71 +1,80 @@
-import { useState, useEffect } from "react";
-import { CharacterCard } from "./components/CharacterCard";
-import './App.css';
+import s from './App.module.css'
+import { useEffect, useState } from 'react'
+import { api } from './constants/api'
 
-export function App() {
-  const [characters, setCharacters] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [page, setPage] = useState(1);
-  const [totalPages, setTotalPages] = useState(1);
+import logo from '/logo.svg'
+import setal from '/setal.png'
+import setad from '/setad.png'
 
 
-  const fetchCharacters = async (currentPage) => {
-    setLoading(true);
-
-    try{
-
-      const response = await fetch(`https://api.disneyapi.dev/character?page=${currentPage}&pageSize=12`);
-      const data = await response.json();
-
-      setCharacters(data.data || []);
-      setTotalPages(data.info?.totalPages || 1);
-     } catch (error) {
-      console.error('Error ao buscar dados da API:', error);
-     } finally {
-      setLoading(false);
-    }
-  };
-
-useEffect(() => {
-  fetchCharacters(page);
-}, [page]);
-
-return (
-  <div className="container">
-    <header>
-      <h1>Personagens da Disney</h1>
-    </header>
+function App() {
+  const [data, setData] = useState([])
+  const [page, setPage] = useState(1)
+  
+  
+  useEffect(() => {
     
-    {loading ? (
-      <p className="loading">Carregando personagens sahur...</p>
-    ) : (
-      <main className="character-grid">
-        {characters.map((char) => (
-        <CharacterCard key={char._id} character={char}/>
-        ))}
-      </main>
-    )}
-
-    <footer className="pagination">
+    api.get(`/character?page=${page || 1}`).then((response) => {
+      setData(response.data.data)
+      console.log(response.data.data)
+    }).catch((error) => {
+      CompositionEvent.log("deu Ruim!", error)
+      
+    })
+    
+  }, [page])
+  
+  return (
+    <>
+    
+    
+    <nav>
+      <img className={s.logo} src={logo} alt="Logo" />
       <button
-      onClick={() => setPage((prev) => Math.max(prev -1, 1))}
-      disabled={page === 1}
-
-      >
-        Anterior
-      </button>
-
-      <span>Página {page} de {totalPages}</span>
-
-      <button 
-      onClick={() => setPage((prev) => Math.min(prev + 1, totalPages))}
-      disabled={page === totalPages}
-      >
-        Próxima
-      </button>
-    </footer>
-  </div>
-);
+    onClick={() => setPage((p) => Math.max(1, p - 1))}
+     className={s.buttonSeta}>
+      <div>
+        <img src={setal} alt="" className={s.seta}/>
+        <p>Anterior</p>
+      </div>
+    </button>
+    
+    <span>Página {page}</span>
+    
+    <button
+    onClick={() => setPage((p) => p + 1)} className={s.buttonSeta}
+    >
+      <div>
+        <img src={setad} alt="" className={s.seta}/>
+        <p>Próxima</p>
+      </div>
+    </button>
+      {/* <div>
+        <label className={s.pg}>Digite uma página  </label>
+        <input min={1} max={42} type="number" placeholder='1/42' value={page} onChange={(e) => setPage(Number(e.target.value))}/>
+      </div> */}
+    </nav>
+    
+    <main>
+      <div className={s.contents}>
+      {data.map((item, index) => {
+        return(
+          
+          <div key={item.id} className={s.cards}>
+            <img src={item.imageUrl} alt={item.name} className={s.images}/>
+            <h4 className={s.content}>name: {item.name}</h4>
+            <p className={s.content}>Filmes: {item.films}</p>
+            <p className={s.content}>Shows de tv: {item.tvShows}</p>
+            <p className={s.content}>Atrações: {item.parkAttractions}</p>
+          </div>
+          
+          
+        )
+      })}
+      </div>
+    </main>
+    </>
+  )
 }
 
-export default App;
+export default App
