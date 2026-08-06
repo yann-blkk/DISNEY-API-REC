@@ -2,9 +2,9 @@ import s from './App.module.css'
 import { useEffect, useState } from 'react'
 import { api } from './constants/api'
 
-import logo from '/logo.svg'
-import setal from '/setal.png'
-import setad from '/setad.png'
+import logo from '../public/logo.svg'
+import arrowLeft from '../public/arrow-left.png'
+import arrowRight from '../public/arrow-right.png'
 
 
 function App() {
@@ -34,7 +34,7 @@ function App() {
     onClick={() => setPage((p) => Math.max(1, p - 1))}
      className={s.buttonSeta}>
       <div>
-        <img src={setal} alt="" className={s.seta}/>
+        <img src={arrowLeft} alt="" className={s.seta}/>
         <p>Anterior</p>
       </div>
     </button>
@@ -45,14 +45,10 @@ function App() {
     onClick={() => setPage((p) => p + 1)} className={s.buttonSeta}
     >
       <div>
-        <img src={setad} alt="" className={s.seta}/>
+        <img src={arrowRight} alt="" className={s.seta}/>
         <p>Próxima</p>
       </div>
     </button>
-      {/* <div>
-        <label className={s.pg}>Digite uma página  </label>
-        <input min={1} max={42} type="number" placeholder='1/42' value={page} onChange={(e) => setPage(Number(e.target.value))}/>
-      </div> */}
     </nav>
     
     <main>

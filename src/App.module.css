@@ -3,3 +3,80 @@
     padding: 0;
     box-sizing: border-box;
 }
+
+nav {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 30px;
+    background-color: #fff;
+    padding: 8px 0px 8px 0px;
+}
+
+.logo {
+    width: 130px;
+    height: auto;
+    padding: 20px 20px 10px 20px;
+}
+
+.contents {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 30px;
+    padding: 20px;
+}
+
+@media (max-width: 1200px) {
+    .contents {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+@media (max-width: 900px) {
+    .contents {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 600px) {
+    .contents {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+.cards {
+    display: flex;
+    background-color: #fff;
+    flex-direction: column;
+    gap: 8px;
+    width: 280px;
+    text-align: center;
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: #000;
+}
+
+.seta {
+    background-color: none;
+    border: none;
+    width: 4vw;
+}
+
+.buttonSeta {
+    background: none;
+    border: none;
+    outline: none;
+    box-shadow: #000;
+    cursor: pointer;
+} 
+
+.content {
+    display: flex;
+    width: 95%;
+    border-radius: 4px;
+    margin: 0 auto;
+}
+
+.images {
+    height: 200px;
+}
